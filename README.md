@@ -15,6 +15,8 @@ I wouldn't expect too much activity from me from now on. I'm basically quitting,
 
 -----------
 
+## What this fork adds
+- Bitmap color/palette swapping (thanks to <a href="https://github.com/mlequime/mkxp-z/tree/master">Marc L.</a>)
 <p align=center>
     <img src="screenshot.png?raw=true" width=512 height=412>
 </p>
