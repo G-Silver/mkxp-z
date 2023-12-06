@@ -1624,7 +1624,7 @@ void Bitmap::swapPalette(char* og_palette,char* palette){
 
 			for (i = 0; i < size; i++) {
 				Color curColor = ogPalette.at(i);
-				if ((oc.red == curColor.red) && (oc.green == curColor.green) && (oc.blue == curColor.blue)) {
+				if ((oc.red == curColor.red) && (oc.green == curColor.green) && (oc.blue == curColor.blue) && (oc.alpha > 0)) { // Ignore if transparent
 					changeAt = i;
 				}
 			}
