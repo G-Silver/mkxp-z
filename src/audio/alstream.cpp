@@ -49,6 +49,7 @@ ALStream::ALStream(LoopMode loopMode,
 	AL::Source::setVolume(alSrc, 1.0f);
 	AL::Source::setPitch(alSrc, 1.0f);
 	AL::Source::detachBuffer(alSrc);
+	AL::Source::initializePanMode(alSrc); // Initialize pan mode
 
 	for (int i = 0; i < STREAM_BUFS; ++i)
 		alBuf[i] = AL::Buffer::gen();
@@ -175,6 +176,11 @@ void ALStream::setPitch(float value)
 		AL::Source::setPitch(alSrc, 1.0f);
 	else
 		AL::Source::setPitch(alSrc, value);
+}
+
+void ALStream::setPan(float value)
+{
+	AL::Source::setPan(alSrc, value);
 }
 
 ALStream::State ALStream::queryState()

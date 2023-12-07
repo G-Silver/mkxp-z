@@ -190,6 +190,19 @@ namespace Source
 	{
 		alSourcePause(id.al);
 	}
+
+	// New functions for panning
+	inline void initializePanMode(Source::ID id)
+	{
+		alSourcei(id.al, AL_SOURCE_RELATIVE, AL_TRUE);
+		alSourcef(id.al, AL_ROLLOFF_FACTOR, 0.0f);
+	}
+
+	inline void setPan(Source::ID id, float value)
+	{
+		value *= 0.5f;
+		alSource3f(id.al, AL_POSITION, value, 0.0f, -sqrtf(1.0f - value*value));
+	}
 }
 
 }

@@ -100,6 +100,7 @@ struct ALStream
 
 	void setVolume(float value);
 	void setPitch(float value);
+	void setPan(float value);
 	State queryState();
 	float queryOffset();
 	bool queryNativePitch();

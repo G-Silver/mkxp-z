@@ -397,6 +397,14 @@ void Audio::sePlay(const char *filename,
 	p->se.play(filename, volume, pitch);
 }
 
+void Audio::sePlayWithPan(const char *filename,
+                   int volume,
+                   int pitch,
+				   int pan)
+{
+	p->se.playPan(filename, volume, pitch, pan);
+}
+
 void Audio::seStop()
 {
 	p->se.stop();

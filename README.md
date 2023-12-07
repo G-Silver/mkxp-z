@@ -17,6 +17,7 @@ I wouldn't expect too much activity from me from now on. I'm basically quitting,
 
 ## What this fork adds
 - Bitmap color/palette swapping (thanks to <a href="https://github.com/mlequime/mkxp-z/tree/master">Marc L.</a>)
+- Audio panning (the file must be mono)
 
 <b> This fork's primary use is for Pokemon Amethyst, a Pokemon fangame. Anyone is free to use this fork though, especially since the only added feature is one written by someone else, just ported to the latest version of mkxp-z! </b>
 ------------

@@ -178,6 +178,71 @@ void SoundEmitter::play(const std::string &filename,
 	AL::Source::play(src);
 }
 
+// Add panning
+void SoundEmitter::playPan(const std::string &filename,
+                        int volume,
+                        int pitch,
+						int pan)
+{
+	float _volume = clamp<int>(volume, 0, 100) / 100.0f;
+	float _pitch  = clamp<int>(pitch, 50, 150) / 100.0f;
+	float _pan = clamp<int>(pan, -100, 100) / 100.0f;
+
+	SoundBuffer *buffer = allocateBuffer(filename);
+
+	if (!buffer)
+		return;
+
+	/* Try to find first free source */
+	size_t i;
+	for (i = 0; i < srcCount; ++i)
+		if (AL::Source::getState(alSrcs[srcPrio[i]]) != AL_PLAYING)
+			break;
+
+	/* If we didn't find any, try to find the lowest priority source
+	 * with the same buffer to overtake */
+	if (i == srcCount)
+		for (size_t j = 0; j < srcCount; ++j)
+			if (atchBufs[srcPrio[j]] == buffer)
+				i = j;
+
+	/* If we didn't find any, overtake the one with lowest priority */
+	if (i == srcCount)
+		i = 0;
+
+	size_t srcIndex = srcPrio[i];
+
+	/* Only detach/reattach if it's actually a different buffer */
+	bool switchBuffer = (atchBufs[srcIndex] != buffer);
+
+	/* Push the used source to the back of the priority list */
+	arrayPushBack(srcPrio, srcCount, i);
+
+	AL::Source::ID src = alSrcs[srcIndex];
+	AL::Source::stop(src);
+
+	if (switchBuffer)
+		AL::Source::detachBuffer(src);
+
+	SoundBuffer *old = atchBufs[srcIndex];
+
+	if (old)
+		SoundBuffer::deref(old);
+
+	atchBufs[srcIndex] = SoundBuffer::ref(buffer);
+
+	if (switchBuffer)
+		AL::Source::attachBuffer(src, buffer->alBuffer);
+
+	AL::Source::initializePanMode(src);
+	AL::Source::setVolume(src, _volume * GLOBAL_VOLUME);
+	AL::Source::setPitch(src, _pitch);
+	AL::Source::setPan(src, _pan);
+
+	AL::Source::play(src);
+}
+
+
 void SoundEmitter::stop()
 {
 	for (size_t i = 0; i < srcCount; i++)

@@ -157,6 +157,18 @@ DEF_FADE( me )
 
 DEF_PLAY_STOP( se )
 
+RB_METHOD(audio_sePlayPan)
+{
+	RB_UNUSED_PARAM;
+	const char *filename;
+	int volume = 100;
+	int pitch = 100;
+	int pan = 0;
+	rb_get_args(argc, argv, "z|iii", &filename, &volume, &pitch, &pan RB_ARG_END);
+	GUARD_EXC( shState->audio().sePlayWithPan(filename, volume, pitch, pan); )
+	return Qnil;
+}
+
 RB_METHOD(audioSetupMidi)
 {
 	RB_UNUSED_PARAM;
@@ -208,6 +220,7 @@ audioBindingInit()
 	_rb_define_module_function(module, "setup_midi", audioSetupMidi);
 
 	BIND_PLAY_STOP( se )
+	_rb_define_module_function(module, "se_play_pan", audio_sePlayPan);
 
 	_rb_define_module_function(module, "__reset__", audioReset);
 }
