@@ -161,6 +161,7 @@ static void _blitBegin(FBO::ID fbo, const Vec2i &size)
 			shader.applyViewportProj();
 			shader.setTranslation(Vec2i());
 			shader.setTexSize(Vec2i(size.x, size.y));
+			shader.setSharpness(shState->config().bicubicSharpness);
 		}
 
 			break;
@@ -174,6 +175,19 @@ static void _blitBegin(FBO::ID fbo, const Vec2i &size)
 		}
 
 			break;
+#ifdef MKXPZ_SSL
+		case xBRZ:
+		{
+			XbrzShader &shader = shState->shaders().xbrz;
+			shader.bind();
+			shader.applyViewportProj();
+			shader.setTranslation(Vec2i());
+			shader.setTexSize(Vec2i(size.x, size.y));
+			shader.setTargetScale(Vec2(1., 1.));
+		}
+
+			break;
+#endif
 		default:
 		{
 			SimpleShader &shader = shState->shaders().simple;
@@ -260,6 +274,16 @@ void blitSource(TEXFBO &source)
 		}
 
 			break;
+#ifdef MKXPZ_SSL
+		case xBRZ:
+		{
+			XbrzShader &shader = shState->shaders().xbrz;
+			shader.bind();
+			shader.setTexSize(Vec2i(blitSrcWidthHires, blitSrcHeightHires));
+		}
+
+			break;
+#endif
 		default:
 		{
 			SimpleShader &shader = shState->shaders().simple;
@@ -305,6 +329,13 @@ void blitRectangle(const IntRect &src, const IntRect &dst, bool smooth)
 	}
 	else
 	{
+#ifdef MKXPZ_SSL
+		if (shState->config().smoothScaling == xBRZ)
+		{
+			XbrzShader &shader = shState->shaders().xbrz;
+			shader.setTargetScale(Vec2((float)(shState->config().xbrzScalingFactor), (float)(shState->config().xbrzScalingFactor)));
+		}
+#endif
 		if (smooth)
 			TEX::setSmooth(true);
 

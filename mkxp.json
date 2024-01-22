@@ -83,9 +83,26 @@
     // 1: Bilinear
     // 2: Bicubic
     // 3: Lanczos3
+    // 4: xBRZ
     // (default: 0)
     //
     // "smoothScaling": 0,
+
+
+    // Sharpness when using Bicubic scaling.
+    // A good starting range is 0 to 100,
+    // but you may wish to go outside that range in either direction.
+    // (default: 100)
+    //
+    // "bicubicSharpness": 100,
+
+
+    // Scaling factor for xBRZ interpolation
+    // (set to at least the ratio of your window size
+    // to the game's native resolution)
+    // (default: 1.0)
+    //
+    // "xbrzScalingFactor": 4.0,
 
 
     // Replace the game's Bitmap files with external high-res files
@@ -310,7 +327,7 @@
     // execution starts
     // (default: none)
     //
-    // "preloadScript": ["scripts/preload/ruby18_wrap.rb",
+    // "preloadScript": ["scripts/preload/ruby_classic_wrap.rb",
     //                   "scripts/preload/mkxp_wrap.rb",
     //                   "scripts/preload/win32_wrap.rb"],
 
