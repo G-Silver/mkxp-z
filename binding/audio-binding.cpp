@@ -169,6 +169,15 @@ RB_METHOD(audio_sePlayPan)
 	return Qnil;
 }
 
+RB_METHOD(audio_seChangePanAll)
+{
+	RB_UNUSED_PARAM;
+	int pan = 0;
+	rb_get_args(argc, argv, "i|", &pan RB_ARG_END);
+	GUARD_EXC( shState->audio().seChangePan(pan); )
+	return Qnil;
+}
+
 RB_METHOD(audioSetupMidi)
 {
 	RB_UNUSED_PARAM;
@@ -221,6 +230,8 @@ audioBindingInit()
 
 	BIND_PLAY_STOP( se )
 	_rb_define_module_function(module, "se_play_pan", audio_sePlayPan);
+
+	_rb_define_module_function(module, "se_change_pan_all", audio_seChangePanAll);
 
 	_rb_define_module_function(module, "__reset__", audioReset);
 }

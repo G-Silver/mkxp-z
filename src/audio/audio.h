@@ -69,6 +69,7 @@ public:
 				int pitch = 100,
 				int pan = 0);
 	void seStop();
+	void seChangePan(int pan = 0);
 
 	void setupMidi();
 	float bgmPos(int track = 0);

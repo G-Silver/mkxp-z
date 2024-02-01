@@ -1678,6 +1678,9 @@ void Bitmap::swapPalette(char* og_palette,char* palette){
 
 	std::vector<Color> ogPalette = parsePalette(og_palette_string);
 	std::vector<Color> newPalette = parsePalette(palette_string);
+    std::vector<Color> palChanges;
+    std::vector<int> xpos;
+    std::vector<int> ypos;
 	const int size = ogPalette.size();
 	const int newSize = newPalette.size();
 	
@@ -1685,6 +1688,7 @@ void Bitmap::swapPalette(char* og_palette,char* palette){
 
 	int changeAt = -1;
 	int i = 0;
+    int j = 0;
 
 	for (int y = 0; y < height(); y++) {
 		for (int x = 0; x < width(); x++) {
@@ -1699,10 +1703,16 @@ void Bitmap::swapPalette(char* og_palette,char* palette){
 			}
 			if ((changeAt > -1) && (changeAt >= newSize == false)) {
 				Color newColor = newPalette.at(changeAt);
-				setPixel(x,y,newColor);
+                palChanges.push_back(newColor);
+                xpos.push_back(x);
+                ypos.push_back(y);
+				// setPixel(x,y,newColor); Do this later.
 			}
 		}
 	}
+    for (int j = 0; j < palChanges.size(); j++) {
+        setPixel(xpos.at(j),ypos.at(j),palChanges.at(j));
+    }
 }
 
 bool Bitmap::getRaw(void *output, int output_size)

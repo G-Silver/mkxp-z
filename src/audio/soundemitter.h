@@ -59,6 +59,7 @@ struct SoundEmitter
 	          int volume,
 	          int pitch,
 			  int pan);
+	void changePanAll(int pan);
 
 	void stop();
 

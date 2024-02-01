@@ -249,6 +249,15 @@ void SoundEmitter::stop()
 		AL::Source::stop(alSrcs[i]);
 }
 
+// Use with only with one effect playing!
+void SoundEmitter::changePanAll(int pan)
+{
+	float _pan = clamp<int>(pan, -100, 100) / 100.0f;
+	for (size_t i = 0; i < srcCount; i++)
+		AL::Source::setPan(alSrcs[i], _pan);
+}
+
+
 struct SoundOpenHandler : FileSystem::OpenHandler
 {
 	SoundBuffer *buffer;

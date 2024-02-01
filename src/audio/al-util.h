@@ -200,7 +200,7 @@ namespace Source
 
 	inline void setPan(Source::ID id, float value)
 	{
-		value *= 0.5f;
+		// value *= 0.5f;
 		alSource3f(id.al, AL_POSITION, value, 0.0f, -sqrtf(1.0f - value*value));
 	}
 }

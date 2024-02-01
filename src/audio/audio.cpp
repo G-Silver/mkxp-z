@@ -410,6 +410,11 @@ void Audio::seStop()
 	p->se.stop();
 }
 
+void Audio::seChangePan(int pan)
+{
+	p->se.changePanAll(pan);
+}
+
 void Audio::setupMidi()
 {
 	shState->midiState().initIfNeeded(shState->config());
